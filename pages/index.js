@@ -1,53 +1,64 @@
 import styles from "../styles/Home.module.css";
-
 import Link from "next/link";
 import categoty from "../data/category";
-import { Animate, AnimateGroup } from "react-simple-animate";
-import { AnimateKeyframes } from "react-simple-animate";
-import { useState } from "react";
+import { useAnimate } from "react-simple-animate";
+import { useState, useEffect } from "react";
+
+//
+
 export default function Home() {
-  const [pause, setPause] = useState(false);
-  setTimeout(() => setPause(true), 4000);
+  const { play, style, isPlaying } = useAnimate({
+    duration: 0.66,
+    direction: "alternate",
+    start: { transform: "translateY(0px)" },
+    end: { transform: "translateY(-100%)" },
+  });
+
+  const { play: playLogo, style: styleLogo } = useAnimate({
+    duration: 0.88,
+    direction: "alternate",
+    start: { transform: "translateY(-100px)" },
+    end: { transform: "translateY(0px)" },
+  });
+
+  const {
+    play: playNav,
+    style: styleNav,
+    isPlayingx,
+  } = useAnimate({
+    duration: 2.2,
+    direction: "alternate",
+    start: { transform: "translateY(-100px)" },
+    end: { transform: "translateY(0px)" },
+  });
+
+  useEffect(() => {
+    play(true);
+    playLogo(true);
+    playNav(true);
+  }, []);
+
   return (
     <>
-      <AnimateKeyframes
-        play
-        pause={pause}
-        delay={3}
-        duration={1}
-        direction="alternate"
-        keyframes={["transform: translateY(-900px)", "transform: translateY()"]}
-      >
-        <div className={styles.overPage}>
-          <h1>خوش آمدید...</h1>
-        </div>
-      </AnimateKeyframes>
+      <div className={styles.overPage} style={style}>
+        <h1>پاساژ ایران</h1>
+      </div>
+
       <div className={styles.content}>
         <div className={styles.main}>
           <div className={styles.navigation}>
             <ul className="d-flex justify-content-between align-items-center m-0 p-5">
               <li className="px-2">
-                {/* <AnimateKeyframes
-                  play
-                  // pause={pause}
-                  delay={0}
-                  duration={1}
-                  direction=""
-                  keyframes={
-                    [
-                      //
-                    ]
-                  }
-                > */}
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center" style={styleNav}>
                   <img src="https://img.icons8.com/external-jumpicon-line-ayub-irawan/32/ffffff/external-_18-user-interface-jumpicon-(line)-jumpicon-line-ayub-irawan.png" />
                   <p className="m-0 pe-2">منو</p>
                 </div>
-                {/* </AnimateKeyframes> */}
               </li>
-              <li className={styles.logo}>لوگو</li>
+              <li style={styleLogo} className={styles.logo}>
+                لوگو
+              </li>
               <li className="px-2">
-                <div className="d-flex align-items-center">
+                <div className="d-flex align-items-center" style={styleNav}>
                   <p className="m-0 ps-2 pt-1">+11 448 4848</p>
                   <img src="https://img.icons8.com/ios/32/ffffff/phone.png" />
                 </div>
@@ -70,8 +81,9 @@ export default function Home() {
               <p>ما به شما کمک میکنیم</p>
               <div className={styles.verticalLine}></div>
               <p>دسته بندی</p>
+              {/* <a href="#category"> */}
               <img src="https://img.icons8.com/ios/50/ffffff/down3.png" />
-              {/* <img src="https://img.icons8.com/ios/50/ffffff/down2.png" /> */}
+              {/* </a> */}
             </div>
             <div className={`me-5 text-end`}>
               <img
@@ -90,6 +102,7 @@ export default function Home() {
           </div>
         </div>
         <div className={styles.section}>
+          {/* <a id="category"></a> */}
           <h3 className="py-5">دسته بندی ها</h3>
           <div className={`container ${styles.container}`}>
             <div className="row ">
